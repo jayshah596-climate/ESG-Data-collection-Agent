@@ -1,0 +1,137 @@
+{
+  "instructions": "Fill in the 'value' field for each item below. Leave blank if data is unknown. Save this file and use with: python main.py merge --dataset <json> --manual <this_file>",
+  "fields": [
+    {
+      "field_path": "company_profile.name",
+      "description": "Legal company name",
+      "expected_unit": "",
+      "value": ""
+    },
+    {
+      "field_path": "company_profile.industry",
+      "description": "Primary industry/sector (e.g., Technology, Energy, Manufacturing)",
+      "expected_unit": "",
+      "value": ""
+    },
+    {
+      "field_path": "company_profile.headquarters",
+      "description": "City, Country of headquarters",
+      "expected_unit": "",
+      "value": ""
+    },
+    {
+      "field_path": "company_profile.reporting_year",
+      "description": "Fiscal/reporting year (e.g., 2024)",
+      "expected_unit": "",
+      "value": ""
+    },
+    {
+      "field_path": "ghg_emissions.scope_1",
+      "description": "Direct GHG emissions (Scope 1)",
+      "expected_unit": "tCO2e",
+      "value": ""
+    },
+    {
+      "field_path": "ghg_emissions.scope_2",
+      "description": "Indirect energy-related GHG emissions (Scope 2)",
+      "expected_unit": "tCO2e",
+      "value": ""
+    },
+    {
+      "field_path": "ghg_emissions.scope_3",
+      "description": "Other indirect GHG emissions - value chain (Scope 3)",
+      "expected_unit": "tCO2e",
+      "value": ""
+    },
+    {
+      "field_path": "ghg_emissions.total",
+      "description": "Total GHG emissions (Scope 1+2+3)",
+      "expected_unit": "tCO2e",
+      "value": ""
+    },
+    {
+      "field_path": "energy.total_consumption",
+      "description": "Total energy consumed by the organisation",
+      "expected_unit": "MWh",
+      "value": ""
+    },
+    {
+      "field_path": "energy.renewable_energy_pct",
+      "description": "Percentage of energy from renewable sources",
+      "expected_unit": "%",
+      "value": ""
+    },
+    {
+      "field_path": "climate_targets.net_zero_year",
+      "description": "Target year to achieve net-zero emissions",
+      "expected_unit": "",
+      "value": ""
+    },
+    {
+      "field_path": "climate_targets.interim_targets",
+      "description": "Interim emission reduction targets (e.g., 50% reduction by 2030)",
+      "expected_unit": "",
+      "value": ""
+    },
+    {
+      "field_path": "climate_targets.science_based_targets",
+      "description": "Science-Based Target details or SBTi commitment status",
+      "expected_unit": "",
+      "value": ""
+    },
+    {
+      "field_path": "climate_risks.physical_risks",
+      "description": "Physical climate risks identified (e.g., flooding, drought, wildfire)",
+      "expected_unit": "",
+      "value": ""
+    },
+    {
+      "field_path": "climate_risks.transition_risks",
+      "description": "Transition risks identified (e.g., carbon pricing, regulation, technology shift)",
+      "expected_unit": "",
+      "value": ""
+    },
+    {
+      "field_path": "governance.board_oversight",
+      "description": "Board-level ESG/climate oversight details",
+      "expected_unit": "",
+      "value": ""
+    },
+    {
+      "field_path": "governance.esg_committees",
+      "description": "ESG/sustainability committee details",
+      "expected_unit": "",
+      "value": ""
+    },
+    {
+      "field_path": "governance.climate_linked_incentives",
+      "description": "Climate-linked executive incentives/compensation details",
+      "expected_unit": "",
+      "value": ""
+    },
+    {
+      "field_path": "scope3_breakdown.purchased_goods_and_services",
+      "description": "Scope 3 Category 1: Purchased goods and services emissions",
+      "expected_unit": "tCO2e",
+      "value": ""
+    },
+    {
+      "field_path": "scope3_breakdown.transport_and_distribution",
+      "description": "Scope 3 Category 4/9: Transport and distribution emissions",
+      "expected_unit": "tCO2e",
+      "value": ""
+    },
+    {
+      "field_path": "scope3_breakdown.use_of_sold_products",
+      "description": "Scope 3 Category 11: Use of sold products emissions",
+      "expected_unit": "tCO2e",
+      "value": ""
+    },
+    {
+      "field_path": "scope3_breakdown.end_of_life",
+      "description": "Scope 3 Category 12: End-of-life treatment of sold products emissions",
+      "expected_unit": "tCO2e",
+      "value": ""
+    }
+  ]
+}
