@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block title %}ESG Data Collection System{% endblock %}
+{% block content %}
+<div class="container">
+    <div class="hero">
+        <h1>ESG Data Collection & Intelligence</h1>
+        <p>Collect, validate, and standardize ESG data from websites, PDFs, and manual input. Generate professional reports in JSON, Excel, and Word formats.</p>
+        <a href="/collect" class="btn btn-primary btn-lg">Start New Collection</a>
+    </div>
+
+    <div class="features">
+        <div class="feature">
+            <div class="icon">&#127760;</div>
+            <h3>Web Scraping</h3>
+            <p>Automatically extract ESG data from company websites and sustainability pages.</p>
+        </div>
+        <div class="feature">
+            <div class="icon">&#128196;</div>
+            <h3>PDF Extraction</h3>
+            <p>Parse sustainability reports and annual reports for emissions, targets, and governance data.</p>
+        </div>
+        <div class="feature">
+            <div class="icon">&#9997;&#65039;</div>
+            <h3>Manual Entry</h3>
+            <p>Fill in ESG data directly through a structured web form with guided fields.</p>
+        </div>
+        <div class="feature">
+            <div class="icon">&#128202;</div>
+            <h3>Multi-Format Output</h3>
+            <p>Download results as JSON dataset, multi-sheet Excel workbook, or Word report.</p>
+        </div>
+        <div class="feature">
+            <div class="icon">&#9989;</div>
+            <h3>Validation & Quality</h3>
+            <p>Automatic confidence scoring, consistency checks, and data gap analysis.</p>
+        </div>
+        <div class="feature">
+            <div class="icon">&#128200;</div>
+            <h3>Framework Aligned</h3>
+            <p>Aligned with CSRD, ISSB, TCFD, and GHG Protocol standards.</p>
+        </div>
+    </div>
+</div>
+{% endblock %}

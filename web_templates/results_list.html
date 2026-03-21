@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block title %}Past Results{% endblock %}
+{% block content %}
+<div class="container">
+    <h2 style="margin-bottom: 1.5rem; color: var(--primary-dark);">Past Results</h2>
+
+    {% if files %}
+    <div class="card">
+        <table>
+            <thead>
+                <tr>
+                    <th>File Name</th>
+                    <th>Type</th>
+                    <th>Size</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for file in files %}
+                <tr>
+                    <td>{{ file.name }}</td>
+                    <td><span class="badge badge-high">{{ file.type }}</span></td>
+                    <td>{{ file.size }}</td>
+                    <td><a href="/download/{{ file.name }}" class="btn btn-secondary" style="padding: 0.3rem 0.8rem; font-size: 0.8rem;">Download</a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+    <div class="card" style="text-align: center; padding: 3rem;">
+        <p style="color: var(--gray-500);">No results yet. Run a collection to generate reports.</p>
+        <a href="/collect" class="btn btn-primary" style="margin-top: 1rem;">Start Collection</a>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

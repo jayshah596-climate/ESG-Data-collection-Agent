@@ -1,0 +1,137 @@
+{% extends "base.html" %}
+{% block title %}Results - {{ company }}{% endblock %}
+{% block content %}
+<div class="container">
+    <h2 style="margin-bottom: 0.5rem; color: var(--primary-dark);">Results: {{ company }}</h2>
+    <p style="color: var(--gray-500); margin-bottom: 1.5rem;">Pipeline completed successfully</p>
+
+    <!-- Quality Summary -->
+    <div class="card">
+        <div class="card-header">Data Quality Summary</div>
+        <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 0.5rem;">
+            <span style="font-size: 2rem; font-weight: 700; color: var(--primary);">
+                {{ "%.1f"|format(result.completeness) }}%
+            </span>
+            <span style="color: var(--gray-500);">data completeness</span>
+        </div>
+        <div class="progress-bar">
+            <div class="fill" style="width: {{ result.completeness }}%;"></div>
+        </div>
+        {% if result.missing_fields %}
+        <p style="font-size: 0.85rem; color: var(--gray-500); margin-top: 0.75rem;">
+            {{ result.missing_fields|length }} field(s) still missing data
+        </p>
+        {% endif %}
+    </div>
+
+    <!-- Download Files -->
+    <div class="card">
+        <div class="card-header">Download Reports</div>
+        <div class="download-grid">
+            <a href="/download/{{ result.json | basename }}" class="download-card" style="text-decoration:none; color:inherit;">
+                <div class="file-type">JSON</div>
+                <div class="file-name">{{ result.json | basename }}</div>
+                <span class="btn btn-secondary" style="margin-top:0.5rem;">Download</span>
+            </a>
+            <a href="/download/{{ result.excel | basename }}" class="download-card" style="text-decoration:none; color:inherit;">
+                <div class="file-type">Excel</div>
+                <div class="file-name">{{ result.excel | basename }}</div>
+                <span class="btn btn-secondary" style="margin-top:0.5rem;">Download</span>
+            </a>
+            <a href="/download/{{ result.word | basename }}" class="download-card" style="text-decoration:none; color:inherit;">
+                <div class="file-type">Word</div>
+                <div class="file-name">{{ result.word | basename }}</div>
+                <span class="btn btn-secondary" style="margin-top:0.5rem;">Download</span>
+            </a>
+        </div>
+    </div>
+
+    <!-- Data Sections -->
+    {% for section in sections %}
+    <div class="card">
+        <div class="card-header section-toggle" onclick="toggleSection('{{ section.id }}')">
+            {{ section.title }}
+            <span class="arrow" id="arrow-{{ section.id }}">&#9660;</span>
+        </div>
+        <div class="section-body" id="body-{{ section.id }}">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Field</th>
+                        <th>Value</th>
+                        <th>Unit</th>
+                        <th>Confidence</th>
+                        <th>Source</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for field_path, field_type in section.fields %}
+                    {% set parts = field_path.split('.') %}
+                    {% set section_data = dataset.get(parts[0], {}) %}
+                    {% set field_data = section_data.get(parts[1], {}) %}
+                    <tr>
+                        <td>{{ descriptions[field_path] }}</td>
+                        <td>
+                            {% if field_data.get('value') and field_data.value != 'missing' %}
+                                <strong>{{ field_data.value }}</strong>
+                            {% else %}
+                                <span style="color: var(--gray-500);">--</span>
+                            {% endif %}
+                        </td>
+                        <td>{{ field_data.get('unit', '') }}</td>
+                        <td>
+                            {% set conf = field_data.get('confidence', '') %}
+                            {% if conf == 'High' %}
+                                <span class="badge badge-high">High</span>
+                            {% elif conf == 'Medium' %}
+                                <span class="badge badge-medium">Medium</span>
+                            {% elif conf == 'Low' %}
+                                <span class="badge badge-low">Low</span>
+                            {% else %}
+                                <span class="badge badge-missing">Missing</span>
+                            {% endif %}
+                        </td>
+                        <td style="font-size:0.8rem; color:var(--gray-500);">{{ field_data.get('source', '') }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    {% endfor %}
+
+    <!-- Missing Fields -->
+    {% if result.missing_fields %}
+    <div class="card">
+        <div class="card-header">Data Gaps</div>
+        <p style="font-size: 0.85rem; color: var(--gray-700); margin-bottom: 0.75rem;">
+            The following fields could not be populated. Consider providing this data manually by running a new collection.
+        </p>
+        <ul style="font-size: 0.85rem; color: var(--gray-700); padding-left: 1.5rem;">
+            {% for field in result.missing_fields %}
+            <li style="margin-bottom: 0.25rem;">{{ descriptions.get(field, field) }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+    {% endif %}
+
+    <div style="text-align: center; margin: 2rem 0;">
+        <a href="/collect" class="btn btn-primary">Run Another Collection</a>
+        <a href="/results" class="btn btn-secondary" style="margin-left: 0.5rem;">View All Results</a>
+    </div>
+</div>
+
+<script>
+function toggleSection(id) {
+    const body = document.getElementById('body-' + id);
+    const arrow = document.getElementById('arrow-' + id);
+    if (body.style.display === 'none') {
+        body.style.display = '';
+        arrow.style.transform = 'rotate(0deg)';
+    } else {
+        body.style.display = 'none';
+        arrow.style.transform = 'rotate(-90deg)';
+    }
+}
+</script>
+{% endblock %}

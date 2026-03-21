@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+{% block title %}New ESG Data Collection{% endblock %}
+{% block content %}
+<div class="container">
+    <h2 style="margin-bottom: 1.5rem; color: var(--primary-dark);">New ESG Data Collection</h2>
+
+    <form method="POST" enctype="multipart/form-data" action="/collect">
+
+        <!-- Source Inputs -->
+        <div class="card">
+            <div class="card-header">Data Sources</div>
+            <div class="form-group">
+                <label>Company Name *</label>
+                <input type="text" name="company_name" required placeholder="e.g., Apple Inc">
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Website / Sustainability Page URL</label>
+                    <div class="hint">The system will scrape this page for ESG data</div>
+                    <input type="url" name="url" placeholder="https://company.com/sustainability">
+                </div>
+                <div class="form-group">
+                    <label>PDF Report</label>
+                    <div class="hint">Upload a sustainability or annual report (PDF)</div>
+                    <input type="file" name="pdf" accept=".pdf">
+                </div>
+            </div>
+        </div>
+
+        <div class="card" style="background: var(--primary-light); border: 2px solid rgba(26,107,60,0.15);">
+            <p style="font-size: 0.9rem; color: var(--primary-dark);">
+                <strong>Manual Data Entry (below)</strong> &mdash; Fill in any fields you have data for.
+                The system will combine manually entered data with any data extracted from the URL or PDF above.
+                Leave fields blank if you don't have the data.
+            </p>
+        </div>
+
+        <!-- ESG Data Sections -->
+        {% for section in sections %}
+        <div class="card">
+            <div class="card-header section-toggle" onclick="toggleSection('{{ section.id }}')">
+                {{ section.title }}
+                <span class="arrow" id="arrow-{{ section.id }}">&#9660;</span>
+            </div>
+            <div class="section-body" id="body-{{ section.id }}">
+                <div class="form-row">
+                    {% for field_path, field_type in section.fields %}
+                    <div class="form-group">
+                        <label>
+                            {{ descriptions[field_path] }}
+                            {% if units.get(field_path) %}
+                            <span class="unit-badge">{{ units[field_path] }}</span>
+                            {% endif %}
+                        </label>
+                        {% if field_type == "number" %}
+                        <input type="number" name="{{ field_path }}" step="any"
+                               placeholder="Enter value{% if units.get(field_path) %} in {{ units[field_path] }}{% endif %}">
+                        {% else %}
+                        <input type="text" name="{{ field_path }}" placeholder="Enter value">
+                        {% endif %}
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+
+        <div style="text-align: center; margin: 2rem 0;">
+            <button type="submit" class="btn btn-primary btn-lg">
+                Run ESG Pipeline
+            </button>
+        </div>
+    </form>
+</div>
+
+<script>
+function toggleSection(id) {
+    const body = document.getElementById('body-' + id);
+    const arrow = document.getElementById('arrow-' + id);
+    if (body.style.display === 'none') {
+        body.style.display = '';
+        arrow.style.transform = 'rotate(0deg)';
+    } else {
+        body.style.display = 'none';
+        arrow.style.transform = 'rotate(-90deg)';
+    }
+}
+</script>
+{% endblock %}
