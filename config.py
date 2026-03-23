@@ -2,16 +2,39 @@
 
 # ESG keyword lists for content filtering and extraction
 ESG_KEYWORDS = [
+    # Emissions
     "emission", "carbon", "ghg", "greenhouse", "co2", "scope 1", "scope 2", "scope 3",
-    "climate", "net zero", "net-zero", "carbon neutral", "decarboni",
-    "renewable", "energy consumption", "energy intensity", "solar", "wind",
+    "scope1", "scope2", "scope3", "carbon dioxide", "carbon footprint", "decarboni",
+    # Climate
+    "climate", "net zero", "net-zero", "carbon neutral", "carbon-neutral",
+    "global warming", "paris agreement", "1.5 degree", "1.5°",
+    # Energy
+    "renewable", "energy consumption", "energy intensity", "energy use", "solar", "wind",
+    "clean energy", "green energy", "electricity", "power purchase", "ppa",
+    # General ESG
     "sustainability", "esg", "environmental", "social", "governance",
+    "sustainable development", "sdg", "impact report", "csr",
+    # Nature & resources
     "biodiversity", "water", "waste", "recycl", "circular economy",
-    "science-based target", "sbti", "paris agreement", "tcfd", "csrd", "issb",
+    "deforestation", "land use", "natural capital",
+    # Frameworks & standards
+    "science-based target", "sbti", "tcfd", "csrd", "issb", "gri", "sasb",
+    "cdp", "tnfd", "ifrs", "eu taxonomy",
+    # Governance
     "board oversight", "committee", "incentive", "compensation",
+    "executive remuneration", "sustainability officer",
+    # Risks
     "physical risk", "transition risk", "carbon price", "carbon tax",
+    "stranded asset", "climate risk", "climate-related",
+    # Supply chain
     "supply chain", "purchased goods", "transport", "distribution",
-    "diversity", "inclusion", "human rights", "labor", "health and safety",
+    "value chain", "upstream", "downstream",
+    # Social
+    "diversity", "inclusion", "human rights", "labor", "labour",
+    "health and safety", "living wage", "employee",
+    # Targets & commitments
+    "target", "commitment", "pledge", "ambition", "roadmap", "pathway",
+    "reduction", "reduce", "achieve", "goal",
 ]
 
 # Patterns for numeric extraction
@@ -43,11 +66,16 @@ EMISSION_CONVERSIONS = {
     "mtco2e": 1_000_000.0,
     "mtco2": 1_000_000.0,
     "co2e": 1.0,  # assume tonnes if no prefix
+    "tonnes": 1.0,
+    "tons": 1.0,
+    "metric tonnes": 1.0,
+    "metric tons": 1.0,
 }
 
 ENERGY_CONVERSIONS_TO_MWH = {
     "mwh": 1.0,
     "gwh": 1000.0,
+    "twh": 1_000_000.0,
     "kwh": 0.001,
     "tj": 277.778,
     "gj": 0.277778,
@@ -62,15 +90,22 @@ CONFIDENCE_RULES = {
 
 # Physical and transition risk keywords
 PHYSICAL_RISK_KEYWORDS = [
-    "flood", "drought", "wildfire", "hurricane", "cyclone", "typhoon",
-    "sea level", "heat stress", "extreme weather", "water scarcity",
-    "storm", "precipitation", "temperature rise",
+    "flood", "flooding", "drought", "wildfire", "bush fire",
+    "hurricane", "cyclone", "typhoon",
+    "sea level", "sea-level", "heat stress", "heatwave", "heat wave",
+    "extreme weather", "water scarcity", "water stress",
+    "storm", "precipitation", "temperature rise", "temperature increase",
+    "coastal", "erosion", "landslide", "permafrost",
 ]
 
 TRANSITION_RISK_KEYWORDS = [
-    "carbon price", "carbon tax", "regulation", "policy", "legislation",
-    "stranded asset", "technology shift", "market shift", "reputation",
-    "litigation", "compliance", "ets", "emission trading",
+    "carbon price", "carbon pricing", "carbon tax",
+    "regulation", "regulatory", "policy", "legislation",
+    "stranded asset", "technology shift", "technology risk",
+    "market shift", "market risk", "reputation", "reputational",
+    "litigation", "legal risk", "compliance",
+    "ets", "emission trading", "cap and trade",
+    "fuel efficiency", "energy efficiency standard",
 ]
 
 # Governance keywords
@@ -78,15 +113,21 @@ GOVERNANCE_KEYWORDS = {
     "board_oversight": [
         "board oversight", "board of directors", "board responsibility",
         "board-level", "board level", "board supervision",
+        "board committee", "board governance", "board member",
+        "board chair", "chairman",
     ],
     "esg_committees": [
         "sustainability committee", "esg committee", "climate committee",
         "environmental committee", "csr committee",
+        "sustainability governance", "esg governance",
+        "sustainability board", "responsible business committee",
     ],
-    "climate_incentives": [
+    "climate_linked_incentives": [
         "climate-linked", "esg-linked", "sustainability-linked",
         "emission reduction target", "incentive", "compensation linked",
         "executive remuneration", "performance metric",
+        "sustainability metric", "esg metric", "kpi",
+        "variable pay", "bonus", "long-term incentive",
     ],
 }
 
@@ -94,16 +135,20 @@ GOVERNANCE_KEYWORDS = {
 SCOPE3_CATEGORIES = {
     "purchased_goods_and_services": [
         "purchased goods", "purchased services", "category 1",
+        "procurement", "supply chain emission",
     ],
     "transport_and_distribution": [
         "upstream transport", "downstream transport", "distribution",
-        "category 4", "category 9",
+        "category 4", "category 9", "logistics", "freight",
+        "shipping", "transportation",
     ],
     "use_of_sold_products": [
         "use of sold products", "product use phase", "category 11",
+        "product lifecycle", "customer use",
     ],
     "end_of_life": [
         "end-of-life", "end of life", "disposal", "category 12",
+        "waste treatment", "product disposal",
     ],
 }
 
