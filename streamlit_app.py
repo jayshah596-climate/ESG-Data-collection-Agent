@@ -1,16 +1,34 @@
 """ESG Data Collection - Streamlit App."""
 
 import os
+import sys
 import json
 import tempfile
+
+# Ensure the repo root is on sys.path so esg_agent is importable on
+# Streamlit Community Cloud (where the local package isn't pip-installed).
+_ROOT = os.path.dirname(os.path.abspath(__file__))
+if _ROOT not in sys.path:
+    sys.path.insert(0, _ROOT)
 
 import streamlit as st
 
 from esg_agent.pipeline import run_pipeline
 from esg_agent.manual_integration import FIELD_DESCRIPTIONS, FIELD_UNITS
 
-OUTPUT_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "output")
-os.makedirs(OUTPUT_DIR, exist_ok=True)
+# On Streamlit Community Cloud the repo directory is read-only; use /tmp instead.
+_REPO_DIR = os.path.dirname(os.path.abspath(__file__))
+_DEFAULT_OUTPUT = os.path.join(_REPO_DIR, "output")
+try:
+    os.makedirs(_DEFAULT_OUTPUT, exist_ok=True)
+    # Quick write test
+    _test = os.path.join(_DEFAULT_OUTPUT, ".writetest")
+    open(_test, "w").close()
+    os.remove(_test)
+    OUTPUT_DIR = _DEFAULT_OUTPUT
+except OSError:
+    OUTPUT_DIR = os.path.join(tempfile.gettempdir(), "esg_output")
+    os.makedirs(OUTPUT_DIR, exist_ok=True)
 
 # ── Page config ──────────────────────────────────────────────────────────────
 st.set_page_config(
