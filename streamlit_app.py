@@ -13,8 +13,12 @@ if _ROOT not in sys.path:
 
 import streamlit as st
 
-from esg_agent.pipeline import run_pipeline
-from esg_agent.manual_integration import FIELD_DESCRIPTIONS, FIELD_UNITS
+try:
+    from esg_agent.pipeline import run_pipeline
+    from esg_agent.manual_integration import FIELD_DESCRIPTIONS, FIELD_UNITS
+except Exception as e:
+    st.error(f"Failed to import esg_agent: {e}")
+    st.stop()
 
 # On Streamlit Community Cloud the repo directory is read-only; use /tmp instead.
 _REPO_DIR = os.path.dirname(os.path.abspath(__file__))
